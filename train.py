@@ -156,7 +156,6 @@ def get_all_sentences(ds, lang):
 def get_or_build_tokenizer(config, ds, lang):
     tokenizer_path = Path(config["tokenizer_file"].format(lang))
     if not Path.exists(tokenizer_path):
-        # Most code taken from: https://huggingface.co/docs/tokenizers/quicktour
         tokenizer = Tokenizer(WordLevel(unk_token="[UNK]"))
         tokenizer.pre_tokenizer = Whitespace()
         trainer = WordLevelTrainer(
@@ -178,7 +177,7 @@ def get_ds(config):
             split="train",
         )
         .shuffle(seed=2024)
-        .select(range(200_000))
+        .select(range(100_000))
     )
 
     # Build tokenizers
